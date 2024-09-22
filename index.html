@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App for keepit</title>
+    <link rel="stylesheet" href="assets/main.css">
+</head>
+
+<body>
+    <main class="main">
+        <div class="container">
+            <h1>ToDo List</h1>
+            <div class="flex-block">
+                <div class="content">
+                    <div id="task-list" class="list-component"></div>
+                    <div class="single-component">
+                        <h3>Add new tasks</h3>
+                        <form id="todo-form" class="todo-form">
+                            <div class="todo-form__input-block">
+                                <label for="title">Title:</label>
+                                <input type="text" id="title" name="title" required>
+                            </div>
+                            <div class="todo-form__input-block">
+                                <label for="due-date">Due Date:</label>
+                                <input type="date" id="due-date" name="due-date" required>
+                            </div>
+                            <div class="todo-form__textarea-block">
+                                <label for="description">Description:</label>
+                                <textarea id="description" name="description"></textarea>
+                            </div>
+                            <div class="todo-form__btn-group">
+                                <button type="submit" id="submit-btn" class="btn btn-submit">Add Task</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="single-component">
+                    <h3>Filter</h3>
+                    <div id="filters" class="filters-form">
+                        <div class="filters-form__input-block">
+                            <label for="filter-title">Filter by Title:</label>
+                            <input type="text" id="filter-title" name="filter-title">
+                        </div>
+                        <div class="filters-form__input-block">
+                            <label for="filter-date">Filter by Date:</label>
+                            <input type="date" id="filter-date" name="filter-date">
+                        </div>
+                        <div class="filters-form__btn-group">
+                            <button id="clear-filter-btn" class="btn btn-delete">Clear filters</button>
+                            <button id="filter-btn" class="btn btn-submit">Apply filters</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="assets/main.js" type="module"></script>
+</body>
+
+</html>
