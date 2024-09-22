@@ -1,5 +1,6 @@
 :root {
   --main-bg: #edffc352;
+  --date-color: #5e5e5e;
   --primary-text-color: #333333;
   --blank-gray: #e7e7e7;
   --hovered-gray: #c9c9c9;
@@ -47,6 +48,14 @@ h4 {
 
 p {
   margin: 0;
+  color: var(--date-color);
+  font-size: 0.9rem;
+}
+
+pre {
+  margin: 0;
+  font-family: "Open-sans", sans-serif;
+  line-height: 150%;
 }
 
 .btn {

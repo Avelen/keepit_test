@@ -77,7 +77,7 @@ class TodoApp {
         taskElement.innerHTML = `
             <div class="task-item__body">
                 <h4>${task.title}</h4>
-                <p>${task.description}</p>
+                <pre>${task.description}</pre>
                 <p>Due Date: ${task.dueDate}</p>
             </div>
             <div class="task-item__btn-group">
@@ -97,6 +97,7 @@ class TodoApp {
         const taskElement = this.createTaskElement(task);
         taskList.appendChild(taskElement);
         this.taskList.push(task);
+        console.log(task);
     }
 
     deleteTask(id, taskElement) {
