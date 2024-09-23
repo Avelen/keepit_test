@@ -80,6 +80,38 @@ class UIHandler {
         return taskElement;
     }
 
+    setTaskItemBtnListeners(toggleFn, deleteFn) {
+        this.taskList.addEventListener('click', async (event) => {
+            const target = event.target;
+            const taskId = +target.dataset.id;
+            const taskElement = target.closest('.task-item');
+
+            if (target.classList.contains('btn-delete')) {
+                if (!confirm('Are you sure you want to delete this task?')) return false;
+                const isDelete = await deleteFn(taskId, taskElement);
+                if (isDelete) this.deleteTaskFromList(taskElement);
+            }
+
+            if (target.classList.contains('btn-toggle')) {
+                const task = await toggleFn(taskId, taskElement);
+                if (task) this.updateTask(task, taskElement);
+            }
+        });
+    }
+
+    deleteTaskFromList(taskList) {
+        taskList.remove();
+    }
+
+    updateTask(task, taskElement) {
+        const toggleBtn = taskElement.querySelector('.btn-toggle');
+        toggleBtn.textContent = task.done ? 'Undo' : 'Done';
+
+        return task.done
+            ? taskElement.classList.add('completed')
+            : taskElement.classList.remove('completed');
+    }
+
     showValidationError() {
         this.formTitle.classList.add('error');
         this.formDate.classList.add('error');

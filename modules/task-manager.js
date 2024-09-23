@@ -1,17 +1,16 @@
 class TaskManager {
-
     constructor(db, filter) {
         this.filter = filter;
         this.db = db;
         this.taskList = [];
     }
 
-    async loadTasks() {
+    loadTasks = async () => {
         this.taskList = await this.db.getAllTasks();
         return this.taskList;
     }
 
-    async addTask(newTask) {
+    addTask = async (newTask) => {
         const addedTask = await this.db.addTask(newTask);
 
         if (addedTask) {
@@ -20,23 +19,21 @@ class TaskManager {
         }
     }
 
-    async deleteTask(id, taskElement) {
-        if (!confirm('Are you sure you want to delete this task?')) return false;
-        await this.db.deleteTask(id);
-        return taskElement;
+    deleteTask = async (id, taskElement) => {
+        const isDelete = await this.db.deleteTask(id);
+        if (isDelete) {
+            this.taskList = this.taskList.filter((task) => task.id !== id);
+            return taskElement;
+        }
+
+        return false;
     }
 
-    toggleTaskStatus(task, taskElement) {
+    toggleTaskStatus = async (taskId) => {
+        const task = this.taskList.find((task) => task.id === taskId);
         task.done = !task.done;
-
-        this.db.updateTask(task).then(() => {
-            const toggleBtn = taskElement.querySelector('.btn-toggle');
-            toggleBtn.textContent = task.done ? 'Undo' : 'Done';
-
-            return task.done
-                ? taskElement.classList.add('completed')
-                : taskElement.classList.remove('completed');
-        });
+        const updatedTask = await this.db.updateTask(task);
+        return updatedTask ?? false;
     }
 }
 

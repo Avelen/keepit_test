@@ -4,7 +4,6 @@ import Filter from '../modules/filter.js';
 import TaskManager from '../modules/task-manager.js';
 
 class TodoApp {
-
     constructor() {
         this.todoDB = new IndexedDB();
         this.uiHandler = new UIHandler();
@@ -18,28 +17,13 @@ class TodoApp {
             const tasks = await this.taskManager.loadTasks();
             if (tasks) this.uiHandler.buildTaskList(tasks)
         }));
-        this.uiHandler.form.addEventListener('submit', (event) => this.handleTodoFormSubmit(event));
 
-        this.uiHandler.taskList.addEventListener('click', async (event) => {
-            const target = event.target;
-        
-            if (target.classList.contains('btn-delete')) {
-                const taskId = target.dataset.id;
-                const taskElement = target.closest('.task-item');
-                deletedTask = await this.taskManager.deleteTask(taskId, taskElement);
-                // this.
-            }
-        
-            if (target.classList.contains('btn-toggle')) {
-                const taskId = target.dataset.id;
-                const taskElement = target.closest('.task-item');
-                const task = this.taskManager.taskList.find(t => t.id == taskId);
-                this.taskManager.toggleTaskStatus(task, taskElement);
-            }
-        });
+        this.filter.setBtnListener(this.applyFilters, this.clearFilters);
+        this.uiHandler.form.addEventListener('submit', (event) => this.handleTodoFormSubmit(event));
+        this.uiHandler.setTaskItemBtnListeners(this.taskManager.toggleTaskStatus, this.taskManager.deleteTask);
     }
 
-    async handleTodoFormSubmit(event) {
+    handleTodoFormSubmit = async (event) => {
         event.preventDefault();
         const userData = this.uiHandler.getFormData();
 
@@ -47,19 +31,18 @@ class TodoApp {
             const newTask = await this.taskManager.addTask({ ...userData, done: false });
 
             this.uiHandler.clearTodoFormInputs();
-            const taskElement = this.uiHandler.addTaskToList(newTask);
-            this.attachTaskEventHandlers(taskElement, newTask);
+            this.uiHandler.addTaskToList(newTask);
         }
     }
 
-    applyFilters() {
+    applyFilters = () => {
         const filteredTasks = this.filter.filterTasks(this.taskManager.taskList);
         this.uiHandler.buildTaskList(filteredTasks);
     }
 
-    clearFilters() {
+    clearFilters = () => {
         this.filter.clearFilters();
-        this.uiHandler.buildTaskList(this.taskList);
+        this.uiHandler.buildTaskList(this.taskManager.taskList);
     }
 }
 

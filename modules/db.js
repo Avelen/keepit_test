@@ -72,7 +72,7 @@ class IndexedDB {
             const objectStore = transaction.objectStore('toDoList');
             const request = objectStore.delete(id);
 
-            request.onsuccess = () => resolve();
+            request.onsuccess = () => resolve(true);
 
             request.onerror = (event) => {
                 console.error('Delete task error:', event.target.errorCode);
