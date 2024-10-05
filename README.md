@@ -1,4 +1,4 @@
-# Technical task for Keepit
+# Simple ToDo APP
 The application can be served with [LiveServer VSCode extention](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 
 ### ToDo application that runs on a web browser
